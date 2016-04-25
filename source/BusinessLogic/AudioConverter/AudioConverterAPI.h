@@ -59,9 +59,8 @@ extern "C"
 #pragma pack(push, 1)
 	struct AudioData
 	{
-		uint32_t					m_sampleRate;
-		uint32_t					m_sampleCount;
-		uint16_t					m_channelCount;
+		const void*					m_data;
+		size_t						m_dataLength;
 	};
 #pragma pack(pop)
 
@@ -90,6 +89,12 @@ extern "C"
 
 	//-------------------------------------------------------------------------------------------------
 	AudioConverterExports bool __stdcall AudioConverter_SplitAudio(void* audioConverter, AudioFormat outputFormat, AudioSegment* audioSegments, uint32_t audioSegmentsCount);
+
+	//-------------------------------------------------------------------------------------------------
+	AudioConverterExports uint32_t __stdcall AudioConverter_GetResultsCount(void* audioConverter);
+
+	//-------------------------------------------------------------------------------------------------
+	AudioConverterExports AudioData __stdcall AudioConverter_GetResult(void* audioConverter, uint32_t resultIndex);
 
 	//-------------------------------------------------------------------------------------------------
 	AudioConverterExports bool __stdcall AudioConverter_EnumerateResults(void* audioConverter, ResultsEnumerator resultsEnumerator);

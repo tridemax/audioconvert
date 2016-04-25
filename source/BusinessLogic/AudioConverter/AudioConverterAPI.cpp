@@ -227,6 +227,70 @@ namespace AudioConvert
 	}
 
 	//-------------------------------------------------------------------------------------------------
+	extern "C" AudioConverterExports uint32_t __stdcall AudioConverter_GetResultsCount(void* audioConverter)
+	{
+		class Visitor : public boost::static_visitor<uint32_t>
+		{
+		public:
+			constexpr uint32_t operator ()(const std::nullptr_t&) const
+			{
+				return 0u;
+			}
+
+			constexpr uint32_t operator ()(const AudioConverterExportsStub::AudioFile& audioFile) const
+			{
+				return 1u;
+			}
+
+			inline uint32_t operator ()(const AudioConverterExportsStub::MultipleAudioFile& multipleAudioFile) const
+			{
+				return static_cast<uint32_t>(multipleAudioFile.size());
+			}
+		};
+
+		// Visit results
+		auto* audioConverterStub = reinterpret_cast<AudioConverterExportsStub*>(audioConverter);
+
+		return boost::apply_visitor(Visitor(), audioConverterStub->m_result);
+	}
+
+	//-------------------------------------------------------------------------------------------------
+	extern "C" AudioConverterExports AudioData __stdcall AudioConverter_GetResult(void* audioConverter, uint32_t resultIndex)
+	{
+		class Visitor : public boost::static_visitor<AudioData>
+		{
+		private:
+			const uint32_t				m_resultIndex;
+
+		public:
+			inline Visitor(uint32_t resultIndex) : m_resultIndex(resultIndex)
+			{
+			}
+
+			constexpr AudioData operator ()(const std::nullptr_t&) const
+			{
+				return constexpr AudioData{ nullptr, 0u };
+			}
+
+			inline AudioData operator ()(const AudioConverterExportsStub::AudioFile& audioFile) const
+			{
+				return AudioData{ audioFile.data(), audioFile.size() };
+			}
+
+			inline AudioData operator ()(const AudioConverterExportsStub::MultipleAudioFile& multipleAudioFile) const
+			{
+				assert(m_resultIndex < multipleAudioFile.size());
+				return AudioData{ multipleAudioFile[m_resultIndex].data(), multipleAudioFile[m_resultIndex].size() };
+			}
+		};
+
+		// Visit results
+		auto* audioConverterStub = reinterpret_cast<AudioConverterExportsStub*>(audioConverter);
+
+		return boost::apply_visitor(Visitor(resultIndex), audioConverterStub->m_result);
+	}
+
+	//-------------------------------------------------------------------------------------------------
 	extern "C" AudioConverterExports bool __stdcall AudioConverter_EnumerateResults(void* audioConverter, ResultsEnumerator resultsEnumerator)
 	{
 		class Visitor : public boost::static_visitor<bool>
@@ -239,9 +303,8 @@ namespace AudioConvert
 			{
 			}
 
-			inline bool operator ()(const std::nullptr_t&) const
+			constexpr bool operator ()(const std::nullptr_t&) const
 			{
-				assert(false);
 				return false;
 			}
 
@@ -264,6 +327,7 @@ namespace AudioConvert
 			}
 		};
 
+		// Visit results
 		auto* audioConverterStub = reinterpret_cast<AudioConverterExportsStub*>(audioConverter);
 
 		return boost::apply_visitor(Visitor(resultsEnumerator), audioConverterStub->m_result);
