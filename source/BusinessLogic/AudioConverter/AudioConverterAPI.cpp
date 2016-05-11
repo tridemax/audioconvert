@@ -267,9 +267,9 @@ namespace AudioConvert
 			{
 			}
 
-			constexpr AudioData operator ()(const std::nullptr_t&) const
+			inline AudioData operator ()(const std::nullptr_t&) const
 			{
-				return constexpr AudioData{ nullptr, 0u };
+				return AudioData{ nullptr, 0u };
 			}
 
 			inline AudioData operator ()(const AudioConverterExportsStub::AudioFile& audioFile) const
@@ -303,7 +303,7 @@ namespace AudioConvert
 			{
 			}
 
-			constexpr bool operator ()(const std::nullptr_t&) const
+			inline bool operator ()(const std::nullptr_t&) const
 			{
 				return false;
 			}
