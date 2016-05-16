@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1E7575C1-EDA8-4AA0-B7A1-90611D627508}</ProjectGuid>
+    <Compiler>
+      <Compiler ctype="GppCompiler" />
+    </Compiler>
+    <Language>CPP</Language>
+    <Target>Bin</Target>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\build\audioconvert_debug</OutputPath>
+    <OutputName>audioconvert</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <DefineSymbols>_DEBUG DEBUG MONODEVELOP</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <ExtraCompilerArguments>
+		-std=c++14
+		-m64
+		-msse -msse2 -msse3 -mssse3 -msse4 -msse4.1 -msse4.2 -mavx -mf16c
+		-fpic
+		-fdata-sections
+		-ffunction-sections
+		-I../../boost
+		-I../../audioconvert/thirdparty/include/linux
+		-I../../audioconvert/platform/linux
+	</ExtraCompilerArguments>
+    <ExtraLinkerArguments>
+		-L../../audioconvert/thirdparty/lib/linux
+		-lflac_debug
+		-llame_debug
+		-lmpg123_debug
+		-lvorbis_debug
+		-logg_debug
+		-Wl,--version-script=../../audioconvert/platform/linux/audioconvert.lds
+		-Wl,--unresolved-symbols=report-all
+		-Wl,--gc-sections
+		-Wl,--stats
+	</ExtraLinkerArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>..\build\audioconvert_release</OutputPath>
+    <OutputName>audioconvert</OutputName>
+    <CompileTarget>SharedLibrary</CompileTarget>
+    <OptimizationLevel>3</OptimizationLevel>
+    <DefineSymbols>NDEBUG MONODEVELOP</DefineSymbols>
+    <SourceDirectory>.</SourceDirectory>
+    <ExtraCompilerArguments>
+		-std=c++14
+		-m64
+		-msse -msse2 -msse3 -mssse3 -msse4 -msse4.1 -msse4.2 -mavx -mf16c
+		-fpic
+		-fdata-sections
+		-ffunction-sections
+		-I../../boost
+		-I../../audioconvert/thirdparty/include/linux
+		-I../../audioconvert/platform/linux
+	</ExtraCompilerArguments>
+    <ExtraLinkerArguments>
+		-L../../audioconvert/thirdparty/lib/linux
+		-lflac_release
+		-llame_release
+		-lmpg123_release
+		-lvorbis_release
+		-logg_release
+		-O3
+		-Wl,--version-script=../../audioconvert/platform/linux/audioconvert.lds
+		-Wl,--unresolved-symbols=report-all
+		-Wl,--gc-sections
+		-Wl,--stats
+	</ExtraLinkerArguments>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="source\AudioCodecs\AudioFile.cpp" />
+    <Compile Include="source\AudioCodecs\FlacDecoder.cpp" />
+    <Compile Include="source\AudioCodecs\FlacEncoder.cpp" />
+    <Compile Include="source\AudioCodecs\MpegDecoder.cpp" />
+    <Compile Include="source\AudioCodecs\MpegEncoder.cpp" />
+    <Compile Include="source\AudioCodecs\OpusDecoder.cpp" />
+    <Compile Include="source\AudioCodecs\OpusEncoder.cpp" />
+    <Compile Include="source\AudioCodecs\VorbisDecoder.cpp" />
+    <Compile Include="source\AudioCodecs\VorbisEncoder.cpp" />
+    <Compile Include="source\AudioCodecs\WaveDecoder.cpp" />
+    <Compile Include="source\AudioCodecs\WaveEncoder.cpp" />
+    <Compile Include="source\Auxiliary\FixedStream.cpp" />
+    <Compile Include="source\Auxiliary\VectorStream.cpp" />
+    <Compile Include="source\BusinessLogic\AudioConverter\AudioConverter.cpp" />
+    <Compile Include="source\BusinessLogic\AudioConverter\AudioConverterAPI.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="source\AudioCodecs\AudioFile.h" />
+    <None Include="source\AudioCodecs\AudioMetadata.h" />
+    <None Include="source\AudioCodecs\AudioSink.h" />
+    <None Include="source\AudioCodecs\FlacDecoder.h" />
+    <None Include="source\AudioCodecs\FlacEncoder.h" />
+    <None Include="source\AudioCodecs\MpegDecoder.h" />
+    <None Include="source\AudioCodecs\MpegEncoder.h" />
+    <None Include="source\AudioCodecs\OpusDecoder.h" />
+    <None Include="source\AudioCodecs\OpusEncoder.h" />
+    <None Include="source\AudioCodecs\VorbisDecoder.h" />
+    <None Include="source\AudioCodecs\VorbisEncoder.h" />
+    <None Include="source\AudioCodecs\WaveDecoder.h" />
+    <None Include="source\AudioCodecs\WaveEncoder.h" />
+    <None Include="source\Auxiliary\ChunkedStorage.h" />
+    <None Include="source\Auxiliary\CompressedStorage.h" />
+    <None Include="source\Auxiliary\FixedArray.h" />
+    <None Include="source\Auxiliary\FixedStream.h" />
+    <None Include="source\Auxiliary\IStream.h" />
+    <None Include="source\Auxiliary\JsonPrinter.h" />
+    <None Include="source\Auxiliary\Miscellaneous.h" />
+    <None Include="source\Auxiliary\VectorStream.h" />
+    <None Include="source\BusinessLogic\AudioConverter\AudioConverter.h" />
+    <None Include="source\BusinessLogic\AudioConverter\AudioConverterAPI.h" />
+    <None Include="platform\linux\audioconvert.lds" />
+    <None Include="platform\linux\stdafx.h" />
+  </ItemGroup>
+</Project>
