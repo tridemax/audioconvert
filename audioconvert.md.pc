@@ -1,5 +1,5 @@
 Name: audioconvert
 Description: 
 Version: 0.1
-Libs: -L"/home/danek/Github/build/audioconvert_debug" -laudioconvert
+Libs: -L"/home/danek/Github/build/audioconvert_release" -laudioconvert
 Cflags: -I"/home/danek/Github/audioconvert/source/AudioCodecs" -I"/home/danek/Github/audioconvert/source/Auxiliary" -I"/home/danek/Github/audioconvert/source/BusinessLogic/AudioConverter" -I"/home/danek/Github/audioconvert/platform/linux"
