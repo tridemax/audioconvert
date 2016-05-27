@@ -5,7 +5,7 @@
 
 namespace AudioCodecs
 {
-	class WaveEncoder : public NonCopyable
+	class WaveEncoder : public boost::noncopyable
 	{
 	public:
 		bool EncodeSamples(AudioFile& inputAudio, IStream& outputStream);

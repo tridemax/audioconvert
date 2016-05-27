@@ -1,6 +1,5 @@
-#include "stdafx.h"
+#include "platform.h"
 #include "MpegEncoder.h"
-#include "../Auxiliary/Miscellaneous.h"
 
 
 namespace AudioCodecs

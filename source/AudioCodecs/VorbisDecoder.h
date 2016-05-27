@@ -5,7 +5,7 @@
 
 namespace AudioCodecs
 {
-	class VorbisDecoder : public NonCopyable
+	class VorbisDecoder : public boost::noncopyable
 	{
 	private:
 		OggVorbis_File				m_internalDecoder;

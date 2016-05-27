@@ -1,17 +1,5 @@
 #pragma once
 
-#ifdef _WIN32
-	#ifndef AudioConverterExports
-		#ifdef AUDIOCONVERT_DLL
-			#define AudioConverterExports __declspec(dllexport)
-		#else
-			#define AudioConverterExports __declspec(dllimport)
-		#endif
-	#endif
-#else
-	#define AudioConverterExports
-	#define __stdcall
-#endif
 
 extern "C"
 {
@@ -68,38 +56,38 @@ extern "C"
 	//-------------------------------------------------------------------------------------------------
 	/// ResultsEnumerator
 	//-------------------------------------------------------------------------------------------------
-	typedef bool(__stdcall* ResultsEnumerator)(const void* resultData, size_t resultLength);
+	typedef bool(* ResultsEnumerator)(const void* resultData, size_t resultLength);
 
 	//-------------------------------------------------------------------------------------------------
-	AudioConverterExports void* __stdcall AudioConverter_Allocate();
+	void* AudioConverter_Allocate();
 
 	//-------------------------------------------------------------------------------------------------
-	AudioConverterExports void __stdcall AudioConverter_Free(void* audioConverter);
+	void AudioConverter_Free(void* audioConverter);
 
 	//-------------------------------------------------------------------------------------------------
-	AudioConverterExports void __stdcall AudioConverter_SetInput(void* audioConverter, void* inputData, size_t inputLength, AudioFormat inputFormat);
+	void AudioConverter_SetInput(void* audioConverter, void* inputData, size_t inputLength, AudioFormat inputFormat);
 
 	//-------------------------------------------------------------------------------------------------
-	AudioConverterExports bool __stdcall AudioConverter_ResampleAudio(void* audioConverter, uint32_t outputSampleRate);
+	bool AudioConverter_ResampleAudio(void* audioConverter, uint32_t outputSampleRate);
 
 	//-------------------------------------------------------------------------------------------------
-	AudioConverterExports bool __stdcall AudioConverter_ConvertAudio(void* audioConverter, AudioFormat outputFormat);
+	bool AudioConverter_ConvertAudio(void* audioConverter, AudioFormat outputFormat);
 
 	//-------------------------------------------------------------------------------------------------
-	AudioConverterExports bool __stdcall AudioConverter_ExtractAudioData(void* audioConverter, AudioDataType outputDataType);
+	bool AudioConverter_ExtractAudioData(void* audioConverter, AudioDataType outputDataType);
 
 	//-------------------------------------------------------------------------------------------------
-	AudioConverterExports bool __stdcall AudioConverter_SplitAudio(void* audioConverter, AudioFormat outputFormat, AudioSegment* audioSegments, uint32_t audioSegmentsCount);
+	bool AudioConverter_SplitAudio(void* audioConverter, AudioFormat outputFormat, AudioSegment* audioSegments, uint32_t audioSegmentsCount);
 
 	//-------------------------------------------------------------------------------------------------
-	AudioConverterExports uint32_t __stdcall AudioConverter_GetResultsCount(void* audioConverter);
+	uint32_t AudioConverter_GetResultsCount(void* audioConverter);
 
 	//-------------------------------------------------------------------------------------------------
-	AudioConverterExports AudioData __stdcall AudioConverter_GetResult(void* audioConverter, uint32_t resultIndex);
+	AudioData AudioConverter_GetResult(void* audioConverter, uint32_t resultIndex);
 
 	//-------------------------------------------------------------------------------------------------
-	AudioConverterExports bool __stdcall AudioConverter_EnumerateResults(void* audioConverter, ResultsEnumerator resultsEnumerator);
+	bool AudioConverter_EnumerateResults(void* audioConverter, ResultsEnumerator resultsEnumerator);
 
 	//-------------------------------------------------------------------------------------------------
-	AudioConverterExports const char* __stdcall AudioConverter_LastError(void* audioConverter);
+	const char* AudioConverter_LastError(void* audioConverter);
 }

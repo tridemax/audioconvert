@@ -8,7 +8,7 @@ namespace AudioCodecs
 	//-------------------------------------------------------------------------------------------------
 	/// MpegEncoder
 	//-------------------------------------------------------------------------------------------------
-	class MpegEncoder : public NonCopyable
+	class MpegEncoder : public boost::noncopyable
 	{
 	private:
 		lame_global_flags*			m_internalEncoder;

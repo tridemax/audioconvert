@@ -5,7 +5,7 @@
 
 namespace AudioCodecs
 {
-	class OpusEncoder : public NonCopyable
+	class OpusEncoder : public boost::noncopyable
 	{
 	private:
 		OpusEncoder*				m_internalEncoder;

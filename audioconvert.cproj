@@ -2,7 +2,7 @@
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
     <ProjectGuid>{1E7575C1-EDA8-4AA0-B7A1-90611D627508}</ProjectGuid>
     <Compiler>
       <Compiler ctype="GppCompiler" />
@@ -10,10 +10,11 @@
     <Language>CPP</Language>
     <Target>Bin</Target>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\build\audioconvert_debug</OutputPath>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <OutputPath>..\.build\audioconvert_debug</OutputPath>
     <OutputName>audioconvert</OutputName>
+    <IntermediateOutputPath>..\.build\audioconvert_debug</IntermediateOutputPath>
+    <DebugSymbols>true</DebugSymbols>
     <CompileTarget>SharedLibrary</CompileTarget>
     <DefineSymbols>_DEBUG DEBUG MONODEVELOP</DefineSymbols>
     <SourceDirectory>.</SourceDirectory>
@@ -25,11 +26,13 @@
 		-fdata-sections
 		-ffunction-sections
 		-I../../boost
+		-I../../auxiliary
 		-I../../audioconvert/thirdparty/include/linux
 		-I../../audioconvert/platform/linux
 	</ExtraCompilerArguments>
     <ExtraLinkerArguments>
 		-L../../audioconvert/thirdparty/lib/linux
+		-lauxiliary_debug
 		-lflac_debug
 		-llame_debug
 		-lmpg123_debug
@@ -41,9 +44,10 @@
 		-Wl,--stats
 	</ExtraLinkerArguments>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>..\build\audioconvert_release</OutputPath>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <OutputPath>..\.build\audioconvert_release</OutputPath>
     <OutputName>audioconvert</OutputName>
+    <IntermediateOutputPath>..\.build\audioconvert_release</IntermediateOutputPath>
     <CompileTarget>SharedLibrary</CompileTarget>
     <OptimizationLevel>3</OptimizationLevel>
     <DefineSymbols>NDEBUG MONODEVELOP</DefineSymbols>
@@ -56,11 +60,13 @@
 		-fdata-sections
 		-ffunction-sections
 		-I../../boost
+		-I../../auxiliary
 		-I../../audioconvert/thirdparty/include/linux
 		-I../../audioconvert/platform/linux
 	</ExtraCompilerArguments>
     <ExtraLinkerArguments>
 		-L../../audioconvert/thirdparty/lib/linux
+		-lauxiliary_release
 		-lflac_release
 		-llame_release
 		-lmpg123_release
@@ -85,8 +91,6 @@
     <Compile Include="source\AudioCodecs\VorbisEncoder.cpp" />
     <Compile Include="source\AudioCodecs\WaveDecoder.cpp" />
     <Compile Include="source\AudioCodecs\WaveEncoder.cpp" />
-    <Compile Include="source\Auxiliary\FixedStream.cpp" />
-    <Compile Include="source\Auxiliary\VectorStream.cpp" />
     <Compile Include="source\BusinessLogic\AudioConverter\AudioConverter.cpp" />
     <Compile Include="source\BusinessLogic\AudioConverter\AudioConverterAPI.cpp" />
   </ItemGroup>
@@ -104,17 +108,9 @@
     <None Include="source\AudioCodecs\VorbisEncoder.h" />
     <None Include="source\AudioCodecs\WaveDecoder.h" />
     <None Include="source\AudioCodecs\WaveEncoder.h" />
-    <None Include="source\Auxiliary\ChunkedStorage.h" />
-    <None Include="source\Auxiliary\CompressedStorage.h" />
-    <None Include="source\Auxiliary\FixedArray.h" />
-    <None Include="source\Auxiliary\FixedStream.h" />
-    <None Include="source\Auxiliary\IStream.h" />
-    <None Include="source\Auxiliary\JsonPrinter.h" />
-    <None Include="source\Auxiliary\Miscellaneous.h" />
-    <None Include="source\Auxiliary\VectorStream.h" />
     <None Include="source\BusinessLogic\AudioConverter\AudioConverter.h" />
     <None Include="source\BusinessLogic\AudioConverter\AudioConverterAPI.h" />
     <None Include="platform\linux\audioconvert.lds" />
-    <None Include="platform\linux\stdafx.h" />
+    <None Include="platform\linux\platform.h" />
   </ItemGroup>
 </Project>

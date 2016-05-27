@@ -5,7 +5,7 @@
 
 namespace AudioCodecs
 {
-	class FlacDecoder : public NonCopyable
+	class FlacDecoder : public boost::noncopyable
 	{
 	private:
 		class DecodingContext

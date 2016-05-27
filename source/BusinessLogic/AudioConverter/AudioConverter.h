@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../Auxiliary/IStream.h"
+#include "auxiliary/IStream.h"
 #include "../../AudioCodecs/AudioFile.h"
 #include "AudioConverterAPI.h"
 
@@ -12,7 +12,7 @@ namespace AudioConvert
 	//-------------------------------------------------------------------------------------------------
 	/// AudioConverter
 	//-------------------------------------------------------------------------------------------------
-	class AudioConverter : public NonCopyable
+	class AudioConverter : public boost::noncopyable
 	{
 	private:
 		std::string					m_lastError;

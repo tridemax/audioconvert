@@ -1,8 +1,8 @@
-#include "stdafx.h"
+#include "platform.h"
 #include "AudioConverterAPI.h"
 #include "AudioConverter.h"
-#include "../../Auxiliary/FixedArray.h"
-#include "../../Auxiliary/FixedStream.h"
+#include "auxiliary/FixedArray.h"
+#include "auxiliary/FixedStream.h"
 
 
 namespace AudioConvert
@@ -52,19 +52,19 @@ namespace AudioConvert
 	};
 
 	//-------------------------------------------------------------------------------------------------
-	extern "C" AudioConverterExports void* __stdcall AudioConverter_Allocate()
+	extern "C" void* AudioConverter_Allocate()
 	{
 		return new AudioConverterExportsStub();
 	}
 
 	//-------------------------------------------------------------------------------------------------
-	extern "C" AudioConverterExports void __stdcall AudioConverter_Free(void* audioConverter)
+	extern "C" void AudioConverter_Free(void* audioConverter)
 	{
 		delete reinterpret_cast<AudioConverterExportsStub*>(audioConverter);
 	}
 
 	//-------------------------------------------------------------------------------------------------
-	extern "C" AudioConverterExports void __stdcall AudioConverter_SetInput(void* audioConverter, void* inputData, size_t inputLength, AudioFormat inputFormat)
+	extern "C" void AudioConverter_SetInput(void* audioConverter, void* inputData, size_t inputLength, AudioFormat inputFormat)
 	{
 		auto* audioConverterStub = reinterpret_cast<AudioConverterExportsStub*>(audioConverter);
 
@@ -76,7 +76,7 @@ namespace AudioConvert
 	}
 
 	//-------------------------------------------------------------------------------------------------
-	extern "C" AudioConverterExports bool __stdcall AudioConverter_ResampleAudio(void* audioConverter, uint32_t outputSampleRate)
+	extern "C" bool AudioConverter_ResampleAudio(void* audioConverter, uint32_t outputSampleRate)
 	{
 		auto* audioConverterStub = reinterpret_cast<AudioConverterExportsStub*>(audioConverter);
 
@@ -94,7 +94,7 @@ namespace AudioConvert
 	}
 
 	//-------------------------------------------------------------------------------------------------
-	extern "C" AudioConverterExports bool __stdcall AudioConverter_ConvertAudio(void* audioConverter, AudioFormat outputFormat)
+	extern "C" bool AudioConverter_ConvertAudio(void* audioConverter, AudioFormat outputFormat)
 	{
 		auto* audioConverterStub = reinterpret_cast<AudioConverterExportsStub*>(audioConverter);
 
@@ -123,7 +123,7 @@ namespace AudioConvert
 	}
 
 	//-------------------------------------------------------------------------------------------------
-	extern "C" AudioConverterExports bool __stdcall AudioConverter_ExtractAudioData(void* audioConverter, AudioDataType outputDataType)
+	extern "C" bool AudioConverter_ExtractAudioData(void* audioConverter, AudioDataType outputDataType)
 	{
 		auto* audioConverterStub = reinterpret_cast<AudioConverterExportsStub*>(audioConverter);
 
@@ -154,7 +154,7 @@ namespace AudioConvert
 	}
 
 	//-------------------------------------------------------------------------------------------------
-	extern "C" AudioConverterExports bool __stdcall AudioConverter_SplitAudio(void* audioConverter, AudioFormat outputFormat, AudioSegment* audioSegments, uint32_t audioSegmentsCount)
+	extern "C" bool AudioConverter_SplitAudio(void* audioConverter, AudioFormat outputFormat, AudioSegment* audioSegments, uint32_t audioSegmentsCount)
 	{
 		auto* audioConverterStub = reinterpret_cast<AudioConverterExportsStub*>(audioConverter);
 
@@ -227,7 +227,7 @@ namespace AudioConvert
 	}
 
 	//-------------------------------------------------------------------------------------------------
-	extern "C" AudioConverterExports uint32_t __stdcall AudioConverter_GetResultsCount(void* audioConverter)
+	extern "C" uint32_t AudioConverter_GetResultsCount(void* audioConverter)
 	{
 		class Visitor : public boost::static_visitor<uint32_t>
 		{
@@ -255,7 +255,7 @@ namespace AudioConvert
 	}
 
 	//-------------------------------------------------------------------------------------------------
-	extern "C" AudioConverterExports AudioData __stdcall AudioConverter_GetResult(void* audioConverter, uint32_t resultIndex)
+	extern "C" AudioData AudioConverter_GetResult(void* audioConverter, uint32_t resultIndex)
 	{
 		class Visitor : public boost::static_visitor<AudioData>
 		{
@@ -291,7 +291,7 @@ namespace AudioConvert
 	}
 
 	//-------------------------------------------------------------------------------------------------
-	extern "C" AudioConverterExports bool __stdcall AudioConverter_EnumerateResults(void* audioConverter, ResultsEnumerator resultsEnumerator)
+	extern "C" bool AudioConverter_EnumerateResults(void* audioConverter, ResultsEnumerator resultsEnumerator)
 	{
 		class Visitor : public boost::static_visitor<bool>
 		{
@@ -334,7 +334,7 @@ namespace AudioConvert
 	}
 
 	//-------------------------------------------------------------------------------------------------
-	extern "C" AudioConverterExports const char* __stdcall AudioConverter_LastError(void* audioConverter)
+	extern "C" const char* AudioConverter_LastError(void* audioConverter)
 	{
 		auto* audioConverterStub = reinterpret_cast<AudioConverterExportsStub*>(audioConverter);
 

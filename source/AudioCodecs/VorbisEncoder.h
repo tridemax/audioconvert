@@ -5,7 +5,7 @@
 
 namespace AudioCodecs
 {
-	class VorbisEncoder : public NonCopyable
+	class VorbisEncoder : public boost::noncopyable
 	{
 	private:
 		vorbis_info					m_vorbisInfo;			// struct that stores all the static vorbis bitstream settings

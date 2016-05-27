@@ -1,7 +1,7 @@
 #pragma once
 
 #include "AudioMetadata.h"
-#include "../Auxiliary/Miscellaneous.h"
+#include "auxiliary/Miscellaneous.h"
 
 
 namespace AudioCodecs

@@ -5,7 +5,7 @@
 
 namespace AudioCodecs
 {
-	class OpusDecoder : public NonCopyable
+	class OpusDecoder : public boost::noncopyable
 	{
 	private:
 		ogg_sync_state				m_oggSyncState;

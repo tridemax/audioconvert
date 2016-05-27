@@ -1,6 +1,5 @@
-#include "stdafx.h"
+#include "platform.h"
 #include "FlacEncoder.h"
-#include "../Auxiliary/Miscellaneous.h"
 
 
 namespace AudioCodecs

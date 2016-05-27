@@ -88,7 +88,7 @@ namespace AudioCodecs
 	static_assert(sizeof(WavePcmExtensibleFormat) == 40u, "\"WavePcmExtensibleFormat\" size not equal to 40 bytes.");
 
 	/**********************************************************************************************/
-	class WaveDecoder : public NonCopyable
+	class WaveDecoder : public boost::noncopyable
 	{
 	private:
 		friend class WaveEncoder;

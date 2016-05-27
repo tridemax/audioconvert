@@ -1,14 +1,8 @@
 ﻿<Properties StartupItem="audioconvert.cproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x64" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="source/AudioCodecs/AudioFile.h">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|x64" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="audioconvert.cproj">
     <Files>
-      <File FileName="audioconvert.cproj" Line="9" Column="16" />
-      <File FileName="source/BusinessLogic/AudioConverter/AudioConverter.cpp" Line="17" Column="101" />
-      <File FileName="source/BusinessLogic/AudioConverter/AudioConverter.h" Line="1" Column="1" />
-      <File FileName="source/BusinessLogic/AudioConverter/AudioConverterAPI.h" Line="1" Column="1" />
-      <File FileName="source/Auxiliary/VectorStream.h" Line="1" Column="1" />
-      <File FileName="source/AudioCodecs/AudioFile.h" Line="53" Column="4" />
-      <File FileName="../../Downloads/MPack-master/MPack/Reader.cs" Line="12" Column="6" />
+      <File FileName="audioconvert.cproj" Line="59" Column="8" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

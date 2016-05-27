@@ -5,7 +5,7 @@
 
 namespace AudioCodecs
 {
-	class FlacEncoder : public NonCopyable
+	class FlacEncoder : public boost::noncopyable
 	{
 	private:
 		FLAC__StreamEncoder*		m_internalEncoder;

@@ -5,7 +5,7 @@
 
 namespace AudioCodecs
 {
-	class MpegDecoder : public NonCopyable
+	class MpegDecoder : public boost::noncopyable
 	{
 	private:
 		mpg123_handle*				m_internalDecoder;

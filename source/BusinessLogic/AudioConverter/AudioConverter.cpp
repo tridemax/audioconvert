@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "platform.h"
 #include "AudioConverter.h"
 #include "../../AudioCodecs/WaveDecoder.h"
 #include "../../AudioCodecs/WaveEncoder.h"

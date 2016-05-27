@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Auxiliary/VectorStream.h"
+#include "auxiliary/VectorStream.h"
 
 
 namespace AudioCodecs

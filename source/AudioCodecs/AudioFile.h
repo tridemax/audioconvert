@@ -8,7 +8,7 @@ namespace AudioCodecs
 	//-------------------------------------------------------------------------------------------------
 	/// AudioFile
 	//-------------------------------------------------------------------------------------------------
-	class AudioFile : public AudioSink, public NonCopyable
+	class AudioFile : public AudioSink, public boost::noncopyable
 	{
 	private:
 		typedef	std::unique_ptr<VectorStream<>[]> StreamList;
