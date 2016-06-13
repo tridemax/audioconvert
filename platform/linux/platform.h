@@ -50,10 +50,7 @@
 #include <numeric>
 #include <array>
 #include <vector>
-#include <deque>
 #include <list>
-#include <map>
-#include <unordered_map>
 #include <locale>
 #include <memory>
 #include <typeindex>
@@ -61,15 +58,17 @@
 #include <chrono>
 
 //-------------------------------------------------------------------------------------------------
-/// boost
+/// third party
 //-------------------------------------------------------------------------------------------------
 #include <boost/config.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/variant.hpp>
+#include <boost/filesystem.hpp>
+#include <boost/algorithm/string.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/unordered_map.hpp>
 
-//-------------------------------------------------------------------------------------------------
-/// third party
-//-------------------------------------------------------------------------------------------------
 #include "flac/stream_decoder.h"
 #include "flac/stream_encoder.h"
 #include "lame/lame.h"
@@ -78,12 +77,7 @@
 #include "vorbis/vorbisenc.h"
 #include "vorbis/vorbisfile.h"
 
-//-------------------------------------------------------------------------------------------------
-/// byte type declaration
-//-------------------------------------------------------------------------------------------------
-typedef uint8_t byte;
-
-static_assert(sizeof(byte) == 1u, "Size of \"byte\" typedef not equal to 8 bit.");
+#include "auxiliary.h"
 
 //-------------------------------------------------------------------------------------------------
 ///
@@ -98,9 +92,3 @@ constexpr size_t _countof( ArrayType (&)[Dimension] )
 {
 	return std::extent<ArrayType[Dimension]>::value;
 }
-
-//-------------------------------------------------------------------------------------------------
-/// defines
-//-------------------------------------------------------------------------------------------------
-#define __forceinline					__attribute__((always_inline))
-#define _alloca							alloca

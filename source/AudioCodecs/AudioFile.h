@@ -37,7 +37,7 @@ namespace AudioCodecs
 
 	public:
 		//---------------------------------------------------------------------------------------------
-		__forceinline VectorStream<>* Samples(uint16_t channelIndex)
+		forceinline VectorStream<>* Samples(uint16_t channelIndex)
 		{
 			assert(m_channels && channelIndex < m_metadata.m_channelCount);
 
@@ -47,19 +47,19 @@ namespace AudioCodecs
 		}
 
 		//---------------------------------------------------------------------------------------------
-		__forceinline const AudioMetadata& GetMetadata() const
+		forceinline const AudioMetadata& GetMetadata() const
 		{
 			return m_metadata;
 		}
 
 		//---------------------------------------------------------------------------------------------
-		__forceinline AudioMetadata& GetMetadata()
+		forceinline AudioMetadata& GetMetadata()
 		{
 			return m_metadata;
 		}
 
 		//---------------------------------------------------------------------------------------------
-		__forceinline bool IsEmpty() const
+		forceinline bool IsEmpty() const
 		{
 			return !m_metadata.TestConsistency();
 		}

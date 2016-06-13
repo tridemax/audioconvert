@@ -1,13 +1,12 @@
 #pragma once
 
 #include "AudioMetadata.h"
-#include "auxiliary/Miscellaneous.h"
 
 
 namespace AudioCodecs
 {
-	using namespace Auxiliary;
-	typedef Auxiliary::IStream IStream;
+	using namespace Aux;
+	typedef Aux::IStream IStream;
 
 	class AudioSink
 	{

@@ -92,7 +92,7 @@ namespace AudioCodecs
 
 		// Allocate decoding buffer and run the decoding
 		size_t decodedBytes = 0u;
-		byte* decodingBuffer = reinterpret_cast<byte*>(_alloca(BufferSize));
+		byte* decodingBuffer = reinterpret_cast<byte*>(alloca(BufferSize));
 
 		while (true)
 		{

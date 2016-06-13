@@ -1,8 +1,6 @@
 #include "platform.h"
 #include "AudioConverterAPI.h"
 #include "AudioConverter.h"
-#include "auxiliary/FixedArray.h"
-#include "auxiliary/FixedStream.h"
 
 
 namespace AudioConvert
@@ -39,7 +37,7 @@ namespace AudioConvert
 				}
 
 				// Try to decode input data
-				Auxiliary::FixedStream inputStream(m_inputData, m_inputLength);
+				Aux::FixedStream inputStream(m_inputData, m_inputLength);
 
 				if (!m_audioConverter.DecodeAudio(inputStream, m_inputFormat, m_decodedAudio))
 				{
@@ -111,7 +109,7 @@ namespace AudioConvert
 		// Encode audio
 		audioConverterStub->m_result = AudioConverterExportsStub::AudioFile();
 
-		Auxiliary::VectorStream<false> outputStream(boost::strict_get<AudioConverterExportsStub::AudioFile>(audioConverterStub->m_result));
+		Aux::VectorStream<false> outputStream(boost::strict_get<AudioConverterExportsStub::AudioFile>(audioConverterStub->m_result));
 
 		if (!audioConverterStub->m_audioConverter.EncodeAudio(audioConverterStub->m_decodedAudio, outputStream, outputFormat))
 		{
@@ -213,7 +211,7 @@ namespace AudioConvert
 			outputSegment.TransmitSplittedSamples(&segmentSamples, segmentSize, metadata.m_bytesPerSample);
 
 			// Setup output stream and encode audio segment
-			Auxiliary::VectorStream<false> outputStream(outputSegments[segmentIndex]);
+			Aux::VectorStream<false> outputStream(outputSegments[segmentIndex]);
 
 			if (!audioConverterStub->m_audioConverter.EncodeAudio(outputSegment, outputStream, outputFormat))
 			{

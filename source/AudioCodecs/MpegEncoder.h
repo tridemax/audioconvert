@@ -22,7 +22,7 @@ namespace AudioCodecs
 
 	private:
 		//---------------------------------------------------------------------------------------------
-		__forceinline uint32_t ResolveOutputSampleRate(uint32_t sampleRate) const
+		forceinline uint32_t ResolveOutputSampleRate(uint32_t sampleRate) const
 		{
 			if (sampleRate <= 8000u)
 			{

@@ -1,5 +1,0 @@
-Name: audioconvert
-Description: 
-Version: 0.1
-Libs: -L"/home/danek/Repos/.build/audioconvert_release" -laudioconvert
-Cflags: -I"/home/danek/Repos/audioconvert/source/AudioCodecs" -I"/home/danek/Repos/audioconvert/source/BusinessLogic/AudioConverter" -I"/home/danek/Repos/audioconvert/platform/linux"

@@ -188,7 +188,7 @@ namespace AudioCodecs
 		uint32_t remainedBytes = totalBytes;
 
 		// Allocate storage for reading buffers
-		const byte** readingSamplesData = reinterpret_cast<const byte**>(_alloca(sizeof(byte*) * m_metadata.m_channelCount));
+		const byte** readingSamplesData = reinterpret_cast<const byte**>(alloca(sizeof(byte*) * m_metadata.m_channelCount));
 
 		// Read channels data
 		while (remainedBytes != 0u)

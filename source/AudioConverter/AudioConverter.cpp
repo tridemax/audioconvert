@@ -1,15 +1,15 @@
 #include "platform.h"
 #include "AudioConverter.h"
-#include "../../AudioCodecs/WaveDecoder.h"
-#include "../../AudioCodecs/WaveEncoder.h"
-#include "../../AudioCodecs/FlacDecoder.h"
-#include "../../AudioCodecs/FlacEncoder.h"
-#include "../../AudioCodecs/MpegDecoder.h"
-#include "../../AudioCodecs/MpegEncoder.h"
-#include "../../AudioCodecs/OpusDecoder.h"
-#include "../../AudioCodecs/OpusEncoder.h"
-#include "../../AudioCodecs/VorbisDecoder.h"
-#include "../../AudioCodecs/VorbisEncoder.h"
+#include "../AudioCodecs/WaveDecoder.h"
+#include "../AudioCodecs/WaveEncoder.h"
+#include "../AudioCodecs/FlacDecoder.h"
+#include "../AudioCodecs/FlacEncoder.h"
+#include "../AudioCodecs/MpegDecoder.h"
+#include "../AudioCodecs/MpegEncoder.h"
+#include "../AudioCodecs/OpusDecoder.h"
+#include "../AudioCodecs/OpusEncoder.h"
+#include "../AudioCodecs/VorbisDecoder.h"
+#include "../AudioCodecs/VorbisEncoder.h"
 
 
 namespace AudioConvert
@@ -25,7 +25,7 @@ namespace AudioConvert
 	}
 
 	//-------------------------------------------------------------------------------------------------
-	bool AudioConverter::DecodeAudio(Auxiliary::IMemoryStream& inputStream, AudioFormat audioFormat, AudioCodecs::AudioFile& decodedAudio)
+	bool AudioConverter::DecodeAudio(Aux::IMemoryStream& inputStream, AudioFormat audioFormat, AudioCodecs::AudioFile& decodedAudio)
 	{
 		m_lastError.clear();
 
@@ -137,7 +137,7 @@ namespace AudioConvert
 	}
 
 	//-------------------------------------------------------------------------------------------------
-	bool AudioConverter::EncodeAudio(AudioCodecs::AudioFile& inputAudio, Auxiliary::IStream& outputStream, AudioFormat audioFormat)
+	bool AudioConverter::EncodeAudio(AudioCodecs::AudioFile& inputAudio, Aux::IStream& outputStream, AudioFormat audioFormat)
 	{
 		m_lastError.clear();
 

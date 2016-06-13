@@ -49,7 +49,7 @@ namespace AudioCodecs
 
 		std::unique_ptr<int32_t[]> inputBuffer(new int32_t[metadata.m_channelCount * bufferSize]);
 
-		int32_t** preparedSamplesData = reinterpret_cast<int32_t**>(_alloca(sizeof(int32_t*) * metadata.m_channelCount));
+		int32_t** preparedSamplesData = reinterpret_cast<int32_t**>(alloca(sizeof(int32_t*) * metadata.m_channelCount));
 
 		// Do encoding and stream out encoded flac blocks
 		const bool encodingSuccessfull = inputAudio.ReadAlignedSamples([&](const byte* const* readingBuffer, uint16_t channelCount, uint32_t readedBytesPerChannel) -> bool

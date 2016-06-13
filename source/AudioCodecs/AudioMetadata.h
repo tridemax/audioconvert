@@ -1,7 +1,5 @@
 #pragma once
 
-#include "auxiliary/VectorStream.h"
-
 
 namespace AudioCodecs
 {
@@ -115,7 +113,7 @@ namespace AudioCodecs
 		}
 
 		//---------------------------------------------------------------------------------------------
-		__forceinline bool TestConsistency() const
+		forceinline bool TestConsistency() const
 		{
 			return m_sampleRate != 0 &&
 				GetDataType() != AudioDataType::Unknown &&
@@ -123,19 +121,19 @@ namespace AudioCodecs
 		}
 
 		//---------------------------------------------------------------------------------------------
-		__forceinline uint32_t OverallDataSize() const
+		forceinline uint32_t OverallDataSize() const
 		{
 			return m_channelCount * m_bytesPerSample * m_sampleCount;
 		}
 
 		//---------------------------------------------------------------------------------------------
-		__forceinline uint32_t ChannelDataSize() const
+		forceinline uint32_t ChannelDataSize() const
 		{
 			return m_bytesPerSample * m_sampleCount;
 		}
 
 		//---------------------------------------------------------------------------------------------
-		__forceinline uint32_t BlockAlign() const
+		forceinline uint32_t BlockAlign() const
 		{
 			return m_channelCount * m_bytesPerSample;
 		}
