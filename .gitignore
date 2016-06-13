@@ -1,3 +1,2 @@
-/obj/
-*.pro.user
 /Makefile
+*.pro.user
