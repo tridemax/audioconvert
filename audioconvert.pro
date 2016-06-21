@@ -19,6 +19,7 @@ CONFIG(debug, debug|release) {
 TEMPLATE = lib
 CONFIG += sharedlib precompile_header unversioned_libname c++14
 CONFIG -= qt
+MAKEFILE = $$_PRO_FILE_PWD_/audioconvert.makefile
 
 #-------------------------------------------------------------------------------------------------
 # warnings
