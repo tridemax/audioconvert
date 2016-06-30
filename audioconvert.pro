@@ -129,7 +129,8 @@ HEADERS += \
     source/AudioCodecs/WaveDecoder.h \
     source/AudioCodecs/WaveEncoder.h \
     source/AudioConverter/AudioConverter.h \
-    source/AudioConverter/AudioConverterAPI.h
+    source/AudioConverter/AudioConverterAPI.h \
+    audioconvert.h
 
 DISTFILES += \
     platform/linux/audioconvert.lds

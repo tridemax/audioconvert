@@ -10,11 +10,11 @@ extern "C"
 	{
 		AudioUnknown = 0u,						///< Unknown audio format
 		AudioWave,								///< Uncompressed Wave with RIFF header
-		AudioMpeg,								///< MPEG layer-3 with id3v2 header
-		AudioAac,								///< Advanced Audio Coding in MPEG-4 Part 14 container
 		AudioFlac,								///< FLAC with FLAC header
 		AudioOpus,								///< Opus audio in Ogg container
-		AudioVorbis								///< Vorbis audio in Ogg container
+		AudioVorbis,							///< Vorbis audio in Ogg container
+		AudioMp3,								///< MPEG layer-3 with id3v2 header
+		AudioAac								///< Advanced Audio Coding in MPEG-4 Part 14 container
 	};
 
 	//-------------------------------------------------------------------------------------------------

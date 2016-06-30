@@ -4,12 +4,12 @@
 #include "../AudioCodecs/WaveEncoder.h"
 #include "../AudioCodecs/FlacDecoder.h"
 #include "../AudioCodecs/FlacEncoder.h"
-#include "../AudioCodecs/MpegDecoder.h"
-#include "../AudioCodecs/MpegEncoder.h"
 #include "../AudioCodecs/OpusDecoder.h"
 #include "../AudioCodecs/OpusEncoder.h"
 #include "../AudioCodecs/VorbisDecoder.h"
 #include "../AudioCodecs/VorbisEncoder.h"
+#include "../AudioCodecs/MpegDecoder.h"
+#include "../AudioCodecs/MpegEncoder.h"
 
 
 namespace AudioConvert
@@ -57,14 +57,6 @@ namespace AudioConvert
 			}
 			break;
 
-		case AudioFormat::AudioMpeg: // MPEG layer-3 with id3v2 header
-			if (!AudioCodecs::MpegDecoder::DecodeStream(inputStream, decodedAudio))
-			{
-				assert(false);
-				return false;
-			}
-			break;
-
 		case AudioFormat::AudioOpus: // Opus audio in Ogg container
 			{
 				AudioCodecs::OpusDecoder opusDecoder;
@@ -91,35 +83,9 @@ namespace AudioConvert
 			}
 			break;
 
-		case AudioFormat::AudioUnknown: // Unknown audio format
+		case AudioFormat::AudioMp3: // MPEG layer-3 with id3v2 header
+			if (!AudioCodecs::MpegDecoder::DecodeStream(inputStream, decodedAudio))
 			{
-				// Test for opus stream
-				AudioCodecs::OpusDecoder opusDecoder;
-
-				if (opusDecoder.TestOpen(inputStream))
-				{
-					if (!opusDecoder.DecodeStream(inputStream, decodedAudio))
-					{
-						assert(false);
-						return false;
-					}
-					return true;
-				}
-
-				// Test for vorbis stream
-				AudioCodecs::VorbisDecoder vorbisDecoder;
-
-				if (vorbisDecoder.TestStream(inputStream))
-				{
-					if (!vorbisDecoder.DecodeStream(inputStream, decodedAudio))
-					{
-						assert(false);
-						return false;
-					}
-					return true;
-				}
-
-				// Unsupported ogg stream
 				assert(false);
 				return false;
 			}
@@ -167,18 +133,6 @@ namespace AudioConvert
 			}
 			break;
 
-		case AudioFormat::AudioMpeg: // MPEG layer-3 with id3v2 header
-			{
-				AudioCodecs::MpegEncoder mpegEncoder;
-
-				if (!mpegEncoder.EncodeSamples(inputAudio, outputStream))
-				{
-					assert(false);
-					return false;
-				}
-			}
-			break;
-
 		case AudioFormat::AudioOpus: // Opus audio in Ogg container
 			{
 				AudioCodecs::OpusEncoder opusEncoder;
@@ -196,6 +150,18 @@ namespace AudioConvert
 				AudioCodecs::VorbisEncoder vorbisEncoder;
 
 				if (!vorbisEncoder.EncodeSamples(inputAudio, outputStream))
+				{
+					assert(false);
+					return false;
+				}
+			}
+			break;
+
+		case AudioFormat::AudioMp3: // MPEG layer-3 with id3v2 header
+			{
+				AudioCodecs::MpegEncoder mpegEncoder;
+
+				if (!mpegEncoder.EncodeSamples(inputAudio, outputStream))
 				{
 					assert(false);
 					return false;
