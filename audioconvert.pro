@@ -40,10 +40,12 @@ QMAKE_CXXFLAGS_WARN_ON += \
 QMAKE_CXXFLAGS += \
 	-m64 \
 	-msse -msse2 -msse3 -mssse3 -msse4 -msse4.1 -msse4.2 -mavx -mf16c \
+	-g \
 	-fpic \
 	-fdata-sections \
 	-ffunction-sections \
-	-I$$_PRO_FILE_PWD_/thirdparty/include/linux \
+	-fno-strict-aliasing \
+	-I$$_PRO_FILE_PWD_/thirdparty/linux \
 	-I$$_PRO_FILE_PWD_/platform/linux \
 	-I$$_PRO_FILE_PWD_/../auxiliary \
 	-I$$_PRO_FILE_PWD_/../boost
@@ -68,10 +70,14 @@ CONFIG(debug, debug|release) {
 #-------------------------------------------------------------------------------------------------
 LIBS += \
 	-L$$DESTDIR \
-	-Wl,--version-script=$$_PRO_FILE_PWD_/platform/linux/audioconvert.lds \
 	-Wl,--unresolved-symbols=report-all \
 	-Wl,--gc-sections \
-	-Wl,-rpath,./
+	-Wl,-rpath,./ \
+	-Wl,--version-script=$$_PRO_FILE_PWD_/platform/linux/audioconvert.lds
+
+LIBS += \
+	-lboost_system \
+	-lboost_filesystem
 
 CONFIG(debug, debug|release) {
 	LIBS += \
@@ -95,6 +101,17 @@ CONFIG(debug, debug|release) {
 
 QMAKE_LFLAGS_RELEASE -= -Wl,-O0 -Wl,-O1 -Wl,-O2
 QMAKE_LFLAGS_RELEASE *= -Wl,-O3
+
+#-------------------------------------------------------------------------------------------------
+# after build processing
+#-------------------------------------------------------------------------------------------------
+makedist.commands = objcopy -v --strip-debug --strip-unneeded --target elf64-x86-64 $$DESTDIR/lib$${TARGET}.so $$DESTDIR/lib$${TARGET}_dist.so
+
+first.depends = $(first) makedist
+export(first.depends)
+export(makedist.commands)
+
+QMAKE_EXTRA_TARGETS += first makedist
 
 #-------------------------------------------------------------------------------------------------
 # files

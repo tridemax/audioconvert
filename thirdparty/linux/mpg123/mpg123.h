@@ -1,5 +1,5 @@
 /*
-	libmpg123: MPEG Audio Decoder library (version 1.23.3)
+	libmpg123: MPEG Audio Decoder library (version 1.23.6)
 
 	copyright 1995-2015 by the mpg123 project
 	free software under the terms of the LGPL 2.1
@@ -37,6 +37,12 @@
 /* Nothing on normal/UNIX builds */
 #define MPG123_EXPORT
 #endif
+#endif
+
+/* This is for Visual Studio, so this header works as distributed in the binary downloads */
+#if defined(_MSC_VER)
+#include <stddef.h>
+typedef ptrdiff_t ssize_t;
 #endif
 
 #ifndef MPG123_NO_CONFIGURE /* Enable use of this file without configure. */
@@ -391,7 +397,7 @@ MPG123_EXPORT int mpg123_decoder(mpg123_handle *mh, const char* decoder_name);
  *  The active decoder engine can vary depening on output constraints,
  *  mostly non-resampling, integer output is accelerated via 3DNow & Co. but for
  *  other modes a fallback engine kicks in.
- *  Note that this can return a decoder that is ony active in the hidden and not
+ *  Note that this can return a decoder that is only active in the hidden and not
  *  available as decoder choice from the outside.
  *  \param mh handle
  *  \return The decoder name or NULL on error.
@@ -1097,7 +1103,7 @@ MPG123_EXPORT enum mpg123_text_encoding mpg123_enc_from_id3(unsigned char id3_en
  *  Also, you might want to take a bit of care with preparing the data; for example, strip leading zeroes (I have seen that).
  *  \param sb  target string
  *  \param enc mpg123 text encoding value
- *  \param source source buffer with plain unsigned bytes (you might need to cast from char *)
+ *  \param source source buffer with plain unsigned bytes (you might need to cast from signed char)
  *  \param source_size number of bytes in the source buffer
  *  \return 0 on error, 1 on success (on error, mpg123_free_string is called on sb)
  */
@@ -1387,7 +1393,7 @@ MPG123_EXPORT int mpg123_replace_reader( mpg123_handle *mh
  *  Note: As it would be troublesome to mess with this while having a file open,
  *  this mpg123_close() is implied here.
  *  \param mh handle
- *  \param r_read callback for reading (behaviour like POSIXread)
+ *  \param r_read callback for reading (behaviour like POSIX read)
  *  \param r_lseek callback for seeking (like POSIX lseek)
  *  \param cleanup A callback to clean up an I/O handle on mpg123_close,
  *         can be NULL for none (you take care of cleaning your handles).
