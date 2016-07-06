@@ -2,7 +2,7 @@
 #include "VorbisEncoder.h"
 
 
-namespace AudioCodecs
+namespace audioconvert
 {
 /***************************************************************************************************
 *** VorbisEncoder
@@ -22,7 +22,7 @@ namespace AudioCodecs
 	}
 
 	/**********************************************************************************************/
-	bool VorbisEncoder::EncodeSamples(AudioFile& inputAudio, IStream& outputStream)
+	bool VorbisEncoder::EncodeSamples(AudioFile& inputAudio, aux::IStream& outputStream)
 	{
 		const auto& metadata = inputAudio.GetMetadata();
 		const auto dataType = metadata.GetDataType();
@@ -76,15 +76,15 @@ namespace AudioCodecs
 				switch (dataType)
 				{
 				case AudioDataType::Integer16:
-					samples_converter<int16_t, float>::convert(readingBuffer[channelIndex], preparedSamplesData[channelIndex], sampleCount);
+					aux::samples_converter<int16_t, float>::convert(readingBuffer[channelIndex], preparedSamplesData[channelIndex], sampleCount);
 					break;
 
 				case AudioDataType::Integer24:
-					samples_converter<int24_t, float>::convert(readingBuffer[channelIndex], preparedSamplesData[channelIndex], sampleCount);
+					aux::samples_converter<int24_t, float>::convert(readingBuffer[channelIndex], preparedSamplesData[channelIndex], sampleCount);
 					break;
 
 				case AudioDataType::Integer32:
-					samples_converter<int32_t, float>::convert(readingBuffer[channelIndex], preparedSamplesData[channelIndex], sampleCount);
+					aux::samples_converter<int32_t, float>::convert(readingBuffer[channelIndex], preparedSamplesData[channelIndex], sampleCount);
 					break;
 
 				case AudioDataType::Float32:
@@ -92,7 +92,7 @@ namespace AudioCodecs
 					break;
 
 				case AudioDataType::Float64:
-					samples_converter<double, float>::convert(readingBuffer[channelIndex], preparedSamplesData[channelIndex], sampleCount);
+					aux::samples_converter<double, float>::convert(readingBuffer[channelIndex], preparedSamplesData[channelIndex], sampleCount);
 					break;
 				}
 			}
@@ -124,7 +124,7 @@ namespace AudioCodecs
 	}
 
 	/**********************************************************************************************/
-	void VorbisEncoder::EncodeVorbisBlocks(IStream& outputStream)
+	void VorbisEncoder::EncodeVorbisBlocks(aux::IStream& outputStream)
 	{
 		ogg_packet oggPacket;
 
@@ -145,7 +145,7 @@ namespace AudioCodecs
 	}
 
 	/**********************************************************************************************/
-	void VorbisEncoder::FlushOggStream(IStream& outputStream)
+	void VorbisEncoder::FlushOggStream(aux::IStream& outputStream)
 	{
 		ogg_page oggPage;
 

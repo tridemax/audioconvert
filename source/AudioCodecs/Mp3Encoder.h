@@ -3,7 +3,7 @@
 #include "AudioFile.h"
 
 
-namespace AudioCodecs
+namespace audioconvert
 {
 	//-------------------------------------------------------------------------------------------------
 	/// MpegEncoder
@@ -17,7 +17,7 @@ namespace AudioCodecs
 		MpegEncoder();
 		~MpegEncoder();
 
-		bool EncodeSamples(AudioFile& inputAudio, IStream& outputStream);
+		bool EncodeSamples(AudioFile& inputAudio, aux::IStream& outputStream);
 		void ResetEncoder();
 
 	private:

@@ -1,7 +1,7 @@
 #pragma once
 
 
-namespace AudioCodecs
+namespace audioconvert
 {
 	//-------------------------------------------------------------------------------------------------
 	/// AudioDataType

@@ -3,7 +3,7 @@
 #include "AudioFile.h"
 
 
-namespace AudioCodecs
+namespace audioconvert
 {
 	class FlacEncoder : public boost::noncopyable
 	{
@@ -14,7 +14,7 @@ namespace AudioCodecs
 		FlacEncoder();
 		~FlacEncoder();
 
-		bool EncodeSamples(AudioFile& inputAudio, IStream& outputStream);
+		bool EncodeSamples(AudioFile& inputAudio, aux::IStream& outputStream);
 		void ResetEncoder();
 
 	private:

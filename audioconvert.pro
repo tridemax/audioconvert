@@ -120,8 +120,8 @@ SOURCES += \
     source/AudioCodecs/AudioFile.cpp \
     source/AudioCodecs/FlacDecoder.cpp \
     source/AudioCodecs/FlacEncoder.cpp \
-    source/AudioCodecs/MpegDecoder.cpp \
-    source/AudioCodecs/MpegEncoder.cpp \
+	source/AudioCodecs/Mp3Decoder.cpp \
+	source/AudioCodecs/Mp3Encoder.cpp \
     source/AudioCodecs/OpusDecoder.cpp \
     source/AudioCodecs/OpusEncoder.cpp \
     source/AudioCodecs/VorbisDecoder.cpp \
@@ -129,7 +129,7 @@ SOURCES += \
     source/AudioCodecs/WaveDecoder.cpp \
     source/AudioCodecs/WaveEncoder.cpp \
     source/AudioConverter/AudioConverter.cpp \
-    source/AudioConverter/AudioConverterAPI.cpp
+	source/AudioConverter/AudioConverterAPI.cpp
 
 HEADERS += \
     source/AudioCodecs/AudioFile.h \
@@ -137,8 +137,8 @@ HEADERS += \
     source/AudioCodecs/AudioSink.h \
     source/AudioCodecs/FlacDecoder.h \
     source/AudioCodecs/FlacEncoder.h \
-    source/AudioCodecs/MpegDecoder.h \
-    source/AudioCodecs/MpegEncoder.h \
+	source/AudioCodecs/Mp3Decoder.h \
+	source/AudioCodecs/Mp3Encoder.h \
     source/AudioCodecs/OpusDecoder.h \
     source/AudioCodecs/OpusEncoder.h \
     source/AudioCodecs/VorbisDecoder.h \
@@ -147,7 +147,7 @@ HEADERS += \
     source/AudioCodecs/WaveEncoder.h \
     source/AudioConverter/AudioConverter.h \
     source/AudioConverter/AudioConverterAPI.h \
-    audioconvert.h
+	audioconvert.h
 
 DISTFILES += \
     platform/linux/audioconvert.lds

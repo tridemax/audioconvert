@@ -2,7 +2,7 @@
 #include "OpusDecoder.h"
 
 
-namespace AudioCodecs
+namespace audioconvert
 {
 /***************************************************************************************************
 *** OpusDecoder
@@ -21,19 +21,19 @@ namespace AudioCodecs
 	}
 
 	/**********************************************************************************************/
-	bool OpusDecoder::Open(IMemoryStream& inputStream)
+	bool OpusDecoder::Open(aux::IMemoryStream& inputStream)
 	{
 		return false;
 	}
 
 	/**********************************************************************************************/
-	bool OpusDecoder::TestOpen(IMemoryStream& inputStream)
+	bool OpusDecoder::TestOpen(aux::IMemoryStream& inputStream)
 	{
 		return false;
 	}
 
 	/**********************************************************************************************/
-	bool OpusDecoder::DecodeStream(IMemoryStream& inputStream, AudioSink& outputSink)
+	bool OpusDecoder::DecodeStream(aux::IMemoryStream& inputStream, AudioSink& outputSink)
 	{
 		return true;
 	}

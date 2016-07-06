@@ -3,7 +3,7 @@
 #include "AudioSink.h"
 
 
-namespace AudioCodecs
+namespace audioconvert
 {
 	//-------------------------------------------------------------------------------------------------
 	/// AudioFile
@@ -11,7 +11,7 @@ namespace AudioCodecs
 	class AudioFile : public AudioSink, public boost::noncopyable
 	{
 	private:
-		typedef	std::unique_ptr<VectorStream<>[]> StreamList;
+		typedef	std::unique_ptr<aux::VectorStream<>[]> StreamList;
 
 	private:
 		AudioMetadata				m_metadata;
@@ -37,11 +37,11 @@ namespace AudioCodecs
 
 	public:
 		//---------------------------------------------------------------------------------------------
-		forceinline VectorStream<>* Samples(uint16_t channelIndex)
+		forceinline aux::VectorStream<>* Samples(uint16_t channelIndex)
 		{
 			assert(m_channels && channelIndex < m_metadata.m_channelCount);
 
-			m_channels[channelIndex].Seek(IStream::SeekOrigin::Begin, 0u);
+			m_channels[channelIndex].Seek(aux::IStream::SeekOrigin::Begin, 0u);
 
 			return m_channels.get() + channelIndex;
 		}
@@ -73,27 +73,27 @@ namespace AudioCodecs
 			{
 			case AudioDataType::Integer16:
 				outputChannelData.resize(sizeof(int16_t) * m_metadata.m_sampleCount);
-				samples_converter<input_t, int16_t>::convert(m_channels[channelIndex].Data(), reinterpret_cast<int16_t*>(outputChannelData.data()), m_metadata.m_sampleCount);
+				aux::samples_converter<input_t, int16_t>::convert(m_channels[channelIndex].Data(), reinterpret_cast<int16_t*>(outputChannelData.data()), m_metadata.m_sampleCount);
 				break;
 
 			case AudioDataType::Integer24:
 				outputChannelData.resize(sizeof(int24_t) * m_metadata.m_sampleCount);
-				samples_converter<input_t, int24_t>::convert(m_channels[channelIndex].Data(), reinterpret_cast<int24_t*>(outputChannelData.data()), m_metadata.m_sampleCount);
+				aux::samples_converter<input_t, int24_t>::convert(m_channels[channelIndex].Data(), reinterpret_cast<int24_t*>(outputChannelData.data()), m_metadata.m_sampleCount);
 				break;
 
 			case AudioDataType::Integer32:
 				outputChannelData.resize(sizeof(int32_t) * m_metadata.m_sampleCount);
-				samples_converter<input_t, int32_t>::convert(m_channels[channelIndex].Data(), reinterpret_cast<int32_t*>(outputChannelData.data()), m_metadata.m_sampleCount);
+				aux::samples_converter<input_t, int32_t>::convert(m_channels[channelIndex].Data(), reinterpret_cast<int32_t*>(outputChannelData.data()), m_metadata.m_sampleCount);
 				break;
 
 			case AudioDataType::Float32:
 				outputChannelData.resize(sizeof(float) * m_metadata.m_sampleCount);
-				samples_converter<input_t, float>::convert(m_channels[channelIndex].Data(), reinterpret_cast<float*>(outputChannelData.data()), m_metadata.m_sampleCount);
+				aux::samples_converter<input_t, float>::convert(m_channels[channelIndex].Data(), reinterpret_cast<float*>(outputChannelData.data()), m_metadata.m_sampleCount);
 				break;
 
 			case AudioDataType::Float64:
 				outputChannelData.resize(sizeof(double) * m_metadata.m_sampleCount);
-				samples_converter<input_t, double>::convert(m_channels[channelIndex].Data(), reinterpret_cast<double*>(outputChannelData.data()), m_metadata.m_sampleCount);
+				aux::samples_converter<input_t, double>::convert(m_channels[channelIndex].Data(), reinterpret_cast<double*>(outputChannelData.data()), m_metadata.m_sampleCount);
 				break;
 			}
 		}

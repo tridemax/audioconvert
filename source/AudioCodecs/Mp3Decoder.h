@@ -3,7 +3,7 @@
 #include "AudioFile.h"
 
 
-namespace AudioCodecs
+namespace audioconvert
 {
 	class MpegDecoder : public boost::noncopyable
 	{
@@ -16,7 +16,7 @@ namespace AudioCodecs
 		MpegDecoder();
 		~MpegDecoder();
 
-		static bool DecodeStream(IStream& inputStream, AudioFile& outputAudio);
+		static bool DecodeStream(aux::IStream& inputStream, AudioFile& outputAudio);
 
 	private:
 		static ssize_t ReadCallback(void* userStream, void* readingBuffer, size_t bufferSize);

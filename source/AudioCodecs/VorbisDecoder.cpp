@@ -2,7 +2,7 @@
 #include "VorbisDecoder.h"
 
 
-namespace AudioCodecs
+namespace audioconvert
 {
 /***************************************************************************************************
 *** VorbisDecoder
@@ -19,7 +19,7 @@ namespace AudioCodecs
 	}
 
 	/**********************************************************************************************/
-	bool VorbisDecoder::TestStream(IMemoryStream& inputStream)
+	bool VorbisDecoder::TestStream(aux::IMemoryStream& inputStream)
 	{
 		// Test for vorbis stream
 		if (ov_test_callbacks(&inputStream, &m_internalDecoder, nullptr, 0, VorbisCallbacks) != 0)
@@ -33,7 +33,7 @@ namespace AudioCodecs
 	}
 
 	/**********************************************************************************************/
-	bool VorbisDecoder::DecodeStream(IMemoryStream& inputStream, AudioSink& outputSink)
+	bool VorbisDecoder::DecodeStream(aux::IMemoryStream& inputStream, AudioSink& outputSink)
 	{
 		// Initialize decoder
 		if (m_testOpened)
@@ -129,7 +129,7 @@ namespace AudioCodecs
 	/**********************************************************************************************/
 	size_t VorbisDecoder::ReadCallback(void* buffer, size_t blockSize, size_t blockCount, void* userStream)
 	{
-		IMemoryStream* sourceStream = reinterpret_cast<IMemoryStream*>(userStream);
+		aux::IMemoryStream* sourceStream = reinterpret_cast<aux::IMemoryStream*>(userStream);
 
 		return sourceStream->Read(reinterpret_cast<byte*>(buffer), blockSize * blockCount);
 	}
@@ -137,20 +137,20 @@ namespace AudioCodecs
 	/**********************************************************************************************/
 	int VorbisDecoder::SeekCallback(void* userStream, ogg_int64_t seekPos, int seekOrigin)
 	{
-		IMemoryStream* sourceStream = reinterpret_cast<IMemoryStream*>(userStream);
+		aux::IMemoryStream* sourceStream = reinterpret_cast<aux::IMemoryStream*>(userStream);
 
 		switch (seekOrigin)
 		{
 		case SEEK_SET:
-			sourceStream->Seek(IStream::SeekOrigin::Begin, seekPos);
+			sourceStream->Seek(aux::IStream::SeekOrigin::Begin, seekPos);
 			break;
 
 		case SEEK_CUR:
-			sourceStream->Seek(IStream::SeekOrigin::Current, seekPos);
+			sourceStream->Seek(aux::IStream::SeekOrigin::Current, seekPos);
 			break;
 
 		case SEEK_END:
-			sourceStream->Seek(IStream::SeekOrigin::End, seekPos);
+			sourceStream->Seek(aux::IStream::SeekOrigin::End, seekPos);
 			break;
 		}
 
@@ -160,7 +160,7 @@ namespace AudioCodecs
 	/**********************************************************************************************/
 	long VorbisDecoder::TellCallback(void* userStream)
 	{
-		IMemoryStream* sourceStream = reinterpret_cast<IMemoryStream*>(userStream);
+		aux::IMemoryStream* sourceStream = reinterpret_cast<aux::IMemoryStream*>(userStream);
 
 		return static_cast<long>(sourceStream->Tell());
 	}

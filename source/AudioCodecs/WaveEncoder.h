@@ -3,11 +3,11 @@
 #include "AudioFile.h"
 
 
-namespace AudioCodecs
+namespace audioconvert
 {
 	class WaveEncoder : public boost::noncopyable
 	{
 	public:
-		bool EncodeSamples(AudioFile& inputAudio, IStream& outputStream);
+		bool EncodeSamples(AudioFile& inputAudio, aux::IStream& outputStream);
 	};
 }

@@ -2,7 +2,7 @@
 #include "FlacEncoder.h"
 
 
-namespace AudioCodecs
+namespace audioconvert
 {
 /***************************************************************************************************
 *** FlacEncoder
@@ -22,7 +22,7 @@ namespace AudioCodecs
 	}
 
 	/**********************************************************************************************/
-	bool FlacEncoder::EncodeSamples(AudioFile& inputAudio, IStream& outputStream)
+	bool FlacEncoder::EncodeSamples(AudioFile& inputAudio, aux::IStream& outputStream)
 	{
 		const auto& metadata = inputAudio.GetMetadata();
 		const auto dataType = metadata.GetDataType();
@@ -83,11 +83,11 @@ namespace AudioCodecs
 					break;
 
 				case AudioDataType::Float32:		// convert float source to int32_t encoding buffer
-					samples_converter<float, int32_t>::convert(readingBuffer[channelIndex], preparedSamplesData[channelIndex], sampleCount);
+					aux::samples_converter<float, int32_t>::convert(readingBuffer[channelIndex], preparedSamplesData[channelIndex], sampleCount);
 					break;
 
 				case AudioDataType::Float64:		// convert double source to int32_t encoding buffer
-					samples_converter<double, int32_t>::convert(readingBuffer[channelIndex], preparedSamplesData[channelIndex], sampleCount);
+					aux::samples_converter<double, int32_t>::convert(readingBuffer[channelIndex], preparedSamplesData[channelIndex], sampleCount);
 					break;
 				}
 			}
@@ -125,7 +125,7 @@ namespace AudioCodecs
 	/**********************************************************************************************/
 	FLAC__StreamEncoderWriteStatus FlacEncoder::WriteCallback(const FLAC__StreamEncoder* encoder, const FLAC__byte* buffer, size_t bytes, unsigned int samples, unsigned int current_frame, void* client_data)
 	{
-		IStream* outputStream = reinterpret_cast<IStream*>(client_data);
+		auto* outputStream = reinterpret_cast<aux::IStream*>(client_data);
 
 		if (outputStream->Write(buffer, bytes) != bytes)
 		{
@@ -139,9 +139,9 @@ namespace AudioCodecs
 	/**********************************************************************************************/
 	FLAC__StreamEncoderSeekStatus FlacEncoder::SeekCallback(const FLAC__StreamEncoder* encoder, FLAC__uint64 absolute_byte_offset, void* client_data)
 	{
-		IStream* outputStream = reinterpret_cast<IStream*>(client_data);
+		auto* outputStream = reinterpret_cast<aux::IStream*>(client_data);
 
-		if (outputStream->Seek(IStream::SeekOrigin::Begin, static_cast<intptr_t>(absolute_byte_offset)) != absolute_byte_offset)
+		if (outputStream->Seek(aux::IStream::SeekOrigin::Begin, static_cast<intptr_t>(absolute_byte_offset)) != absolute_byte_offset)
 		{
 			assert(false);
 			return FLAC__STREAM_ENCODER_SEEK_STATUS_ERROR;
@@ -153,7 +153,7 @@ namespace AudioCodecs
 	/**********************************************************************************************/
 	FLAC__StreamEncoderTellStatus FlacEncoder::TellCallback(const FLAC__StreamEncoder* encoder, FLAC__uint64* absolute_byte_offset, void* client_data)
 	{
-		IStream* outputStream = reinterpret_cast<IStream*>(client_data);
+		auto* outputStream = reinterpret_cast<aux::IStream*>(client_data);
 
 		*absolute_byte_offset = outputStream->Tell();
 

@@ -3,7 +3,7 @@
 #include "AudioSink.h"
 
 
-namespace AudioCodecs
+namespace audioconvert
 {
 	class VorbisDecoder : public boost::noncopyable
 	{
@@ -17,8 +17,8 @@ namespace AudioCodecs
 		VorbisDecoder();
 		~VorbisDecoder();
 
-		bool TestStream(IMemoryStream& inputStream);
-		bool DecodeStream(IMemoryStream& inputStream, AudioSink& outputSink);
+		bool TestStream(aux::IMemoryStream& inputStream);
+		bool DecodeStream(aux::IMemoryStream& inputStream, AudioSink& outputSink);
 		void ResetDecoder();
 
 	private:

@@ -3,7 +3,7 @@
 #include "AudioFile.h"
 
 
-namespace AudioCodecs
+namespace audioconvert
 {
 	class OpusEncoder : public boost::noncopyable
 	{
@@ -21,7 +21,7 @@ namespace AudioCodecs
 		OpusEncoder();
 		~OpusEncoder();
 
-		bool EncodeSamples(AudioFile& inputAudio, IStream& outputStream);
+		bool EncodeSamples(AudioFile& inputAudio, aux::IStream& outputStream);
 		void ResetEncoder();
 	};
 }

@@ -3,7 +3,7 @@
 #include "AudioFile.h"
 
 
-namespace AudioCodecs
+namespace audioconvert
 {
 	class VorbisEncoder : public boost::noncopyable
 	{
@@ -18,9 +18,9 @@ namespace AudioCodecs
 		VorbisEncoder();
 		~VorbisEncoder();
 
-		bool EncodeSamples(AudioFile& inputAudio, IStream& outputStream);
-		void EncodeVorbisBlocks(IStream& outputStream);
-		void FlushOggStream(IStream& outputStream);
+		bool EncodeSamples(AudioFile& inputAudio, aux::IStream& outputStream);
+		void EncodeVorbisBlocks(aux::IStream& outputStream);
+		void FlushOggStream(aux::IStream& outputStream);
 		void ResetEncoder();
 	};
 }

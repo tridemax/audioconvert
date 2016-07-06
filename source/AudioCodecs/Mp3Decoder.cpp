@@ -1,8 +1,8 @@
 #include "platform.h"
-#include "MpegDecoder.h"
+#include "Mp3Decoder.h"
 
 
-namespace AudioCodecs
+namespace audioconvert
 {
 /***************************************************************************************************
 *** MpegDecoder
@@ -42,7 +42,7 @@ namespace AudioCodecs
 	/**********************************************************************************************
 		Output format - int16_t. float is unstable.
 	*/
-	bool MpegDecoder::DecodeStream(IStream& inputStream, AudioFile& outputAudio)
+	bool MpegDecoder::DecodeStream(aux::IStream& inputStream, AudioFile& outputAudio)
 	{
 		// Initialize decoder
 		MpegDecoder mpegDecoder;
@@ -127,7 +127,7 @@ namespace AudioCodecs
 	/**********************************************************************************************/
 	ssize_t MpegDecoder::ReadCallback(void* userStream, void* readingBuffer, size_t bufferSize)
 	{
-		IStream* sourceStream = reinterpret_cast<IStream*>(userStream);
+		aux::IStream* sourceStream = reinterpret_cast<aux::IStream*>(userStream);
 
 		return static_cast<ssize_t>(sourceStream->Read(reinterpret_cast<byte*>(readingBuffer), bufferSize));
 	}
@@ -135,20 +135,20 @@ namespace AudioCodecs
 	/**********************************************************************************************/
 	off_t MpegDecoder::SeekCallback(void* userStream, off_t seekPos, int seekOrigin)
 	{
-		IStream* sourceStream = reinterpret_cast<IStream*>(userStream);
+		aux::IStream* sourceStream = reinterpret_cast<aux::IStream*>(userStream);
 
 		switch (seekOrigin)
 		{
 		case SEEK_SET:
-			sourceStream->Seek(IStream::SeekOrigin::Begin, seekPos);
+			sourceStream->Seek(aux::IStream::SeekOrigin::Begin, seekPos);
 			break;
 
 		case SEEK_CUR:
-			sourceStream->Seek(IStream::SeekOrigin::Current, seekPos);
+			sourceStream->Seek(aux::IStream::SeekOrigin::Current, seekPos);
 			break;
 
 		case SEEK_END:
-			sourceStream->Seek(IStream::SeekOrigin::End, seekPos);
+			sourceStream->Seek(aux::IStream::SeekOrigin::End, seekPos);
 			break;
 		}
 

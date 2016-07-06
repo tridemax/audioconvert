@@ -3,7 +3,7 @@
 #include "AudioSink.h"
 
 
-namespace AudioCodecs
+namespace audioconvert
 {
 	class FlacDecoder : public boost::noncopyable
 	{
@@ -11,7 +11,7 @@ namespace AudioCodecs
 		class DecodingContext
 		{
 		public:
-			IMemoryStream&				m_inputStream;
+			aux::IMemoryStream&			m_inputStream;
 			AudioSink&					m_outputSink;
 			bool						m_decodingError;
 			bool						m_metadataRead;
@@ -20,7 +20,7 @@ namespace AudioCodecs
 			uint32_t					m_sampleCount;
 
 		public:
-			inline DecodingContext(IMemoryStream& inputStream, AudioSink& outputSink) :
+			inline DecodingContext(aux::IMemoryStream& inputStream, AudioSink& outputSink) :
 				m_inputStream(inputStream),
 				m_outputSink(outputSink),
 				m_decodingError(false),
@@ -39,8 +39,8 @@ namespace AudioCodecs
 		FlacDecoder();
 		~FlacDecoder();
 
-		bool TestStream(IMemoryStream& inputStream);
-		bool DecodeStream(IMemoryStream& inputStream, AudioSink& outputSink);
+		bool TestStream(aux::IMemoryStream& inputStream);
+		bool DecodeStream(aux::IMemoryStream& inputStream, AudioSink& outputSink);
 		void ResetDecoder();
 
 	private:

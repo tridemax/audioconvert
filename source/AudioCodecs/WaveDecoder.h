@@ -3,7 +3,7 @@
 #include "AudioSink.h"
 
 
-namespace AudioCodecs
+namespace audioconvert
 {
 /***************************************************************************************************
 *** WaveHeader
@@ -130,8 +130,8 @@ namespace AudioCodecs
 		WaveDecoder();
 		~WaveDecoder();
 
-		bool TestStream(IMemoryStream& inputStream);
-		bool DecodeStream(IMemoryStream& inputStream, AudioSink& outputSink);
+		bool TestStream(aux::IMemoryStream& inputStream);
+		bool DecodeStream(aux::IMemoryStream& inputStream, AudioSink& outputSink);
 		bool DecodeChunk(const byte* buffer, size_t bufferLength, AudioSink& outputSink);
 		void ResetDecoder();
 

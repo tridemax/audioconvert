@@ -3,7 +3,7 @@
 #include "AudioSink.h"
 
 
-namespace AudioCodecs
+namespace audioconvert
 {
 	class OpusDecoder : public boost::noncopyable
 	{
@@ -15,9 +15,9 @@ namespace AudioCodecs
 		OpusDecoder();
 		~OpusDecoder();
 
-		bool Open(IMemoryStream& inputStream);
-		bool TestOpen(IMemoryStream& inputStream);
-		bool DecodeStream(IMemoryStream& inputStream, AudioSink& outputSink);
+		bool Open(aux::IMemoryStream& inputStream);
+		bool TestOpen(aux::IMemoryStream& inputStream);
+		bool DecodeStream(aux::IMemoryStream& inputStream, AudioSink& outputSink);
 		bool DecodeChunk(const void* inputBuffer, size_t inputBufferLength, AudioSink& outputSink);
 		bool DecodingCompleted() const;
 	};

@@ -1,8 +1,8 @@
 #include "platform.h"
-#include "MpegEncoder.h"
+#include "Mp3Encoder.h"
 
 
-namespace AudioCodecs
+namespace audioconvert
 {
 	//-------------------------------------------------------------------------------------------------
 	MpegEncoder::MpegEncoder() : m_internalEncoder(lame_init())
@@ -20,7 +20,7 @@ namespace AudioCodecs
 	}
 
 	//-------------------------------------------------------------------------------------------------
-	bool MpegEncoder::EncodeSamples(AudioFile& inputAudio, IStream& outputStream)
+	bool MpegEncoder::EncodeSamples(AudioFile& inputAudio, aux::IStream& outputStream)
 	{
 		const auto& metadata = inputAudio.GetMetadata();
 		const auto dataType = metadata.GetDataType();
@@ -82,12 +82,12 @@ namespace AudioCodecs
 			case AudioDataType::Integer24:		// Integer24 (lame does not support this)
 				if (metadata.m_channelCount == 1u)
 				{
-					samples_converter<int24_t, int32_t>::convert(readingBuffer[0u], inputBuffer.get(), sampleCount);
+					aux::samples_converter<int24_t, int32_t>::convert(readingBuffer[0u], inputBuffer.get(), sampleCount);
 				}
 				else
 				{
-					samples_converter<int24_t, int32_t>::convert(readingBuffer[0u], inputBuffer.get(), sampleCount);
-					samples_converter<int24_t, int32_t>::convert(readingBuffer[1u], inputBuffer.get() + sampleCount, sampleCount);
+					aux::samples_converter<int24_t, int32_t>::convert(readingBuffer[0u], inputBuffer.get(), sampleCount);
+					aux::samples_converter<int24_t, int32_t>::convert(readingBuffer[1u], inputBuffer.get() + sampleCount, sampleCount);
 				}
 
 				encodingResult = lame_encode_buffer_int(

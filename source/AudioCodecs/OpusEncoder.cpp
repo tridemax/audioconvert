@@ -2,7 +2,7 @@
 #include "OpusEncoder.h"
 
 
-namespace AudioCodecs
+namespace audioconvert
 {
 /***************************************************************************************************
 *** OpusEncoder
@@ -18,7 +18,7 @@ namespace AudioCodecs
 	}
 
 	/**********************************************************************************************/
-	bool OpusEncoder::EncodeSamples(AudioFile& inputAudio, IStream& outputStream)
+	bool OpusEncoder::EncodeSamples(AudioFile& inputAudio, aux::IStream& outputStream)
 	{
 		return true;
 	}

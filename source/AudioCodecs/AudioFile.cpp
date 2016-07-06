@@ -2,7 +2,7 @@
 #include "AudioFile.h"
 
 
-namespace AudioCodecs
+namespace audioconvert
 {
 	//-------------------------------------------------------------------------------------------------
 	void AudioFile::SetFormat(const AudioMetadata& metadata)
@@ -15,12 +15,12 @@ namespace AudioCodecs
 		{
 			for (uint16_t channelIndex = 0u; channelIndex != metadata.m_channelCount; ++channelIndex)
 			{
-				m_channels[channelIndex].Seek(IStream::SeekOrigin::Begin, 0u);
+				m_channels[channelIndex].Seek(aux::IStream::SeekOrigin::Begin, 0u);
 			}
 		}
 		else
 		{
-			m_channels.reset(new VectorStream<>[metadata.m_channelCount]);
+			m_channels.reset(new aux::VectorStream<>[metadata.m_channelCount]);
 		}
 
 		m_metadata.m_sampleRate = metadata.m_sampleRate;

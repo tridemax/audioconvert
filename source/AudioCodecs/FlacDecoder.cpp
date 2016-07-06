@@ -2,7 +2,7 @@
 #include "FlacDecoder.h"
 
 
-namespace AudioCodecs
+namespace audioconvert
 {
 /***************************************************************************************************
 *** FlacDecoder
@@ -22,7 +22,7 @@ namespace AudioCodecs
 	}
 
 	/**********************************************************************************************/
-	bool FlacDecoder::TestStream(IMemoryStream& inputStream)
+	bool FlacDecoder::TestStream(aux::IMemoryStream& inputStream)
 	{
 		return false;
 	}
@@ -30,7 +30,7 @@ namespace AudioCodecs
 	/**********************************************************************************************
 		Output format - int[x]_t.
 	*/
-	bool FlacDecoder::DecodeStream(IMemoryStream& inputStream, AudioSink& outputSink)
+	bool FlacDecoder::DecodeStream(aux::IMemoryStream& inputStream, AudioSink& outputSink)
 	{
 		DecodingContext decodingContext(inputStream, outputSink);
 
@@ -119,7 +119,7 @@ namespace AudioCodecs
 	{
 		DecodingContext* decodingContext = reinterpret_cast<DecodingContext*>(client_data);
 
-		decodingContext->m_inputStream.Seek(IStream::SeekOrigin::Begin, static_cast<intptr_t>(absolute_byte_offset));
+		decodingContext->m_inputStream.Seek(aux::IStream::SeekOrigin::Begin, static_cast<intptr_t>(absolute_byte_offset));
 
 		return FLAC__STREAM_DECODER_SEEK_STATUS_OK;
 	}

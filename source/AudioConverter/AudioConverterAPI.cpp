@@ -3,16 +3,16 @@
 #include "AudioConverter.h"
 
 
-namespace AudioConvert
+namespace audioconvert
 {
 	//-------------------------------------------------------------------------------------------------
 	class AudioConverterExportsStub
 	{
 	public:
-		typedef std::vector<byte> AudioFile;
-		typedef FixedArray<AudioFile> MultipleAudioFile;
+		typedef std::vector<byte> AudioBlob;
+		typedef aux::FixedArray<AudioBlob> MultipleAudioBlob;
 
-		typedef boost::variant<std::nullptr_t, AudioFile, MultipleAudioFile> Result;
+		typedef boost::variant<std::nullptr_t, AudioBlob, MultipleAudioBlob> Result;
 
 	public:
 		AudioConverter				m_audioConverter;
@@ -20,7 +20,7 @@ namespace AudioConvert
 		byte*						m_inputData = nullptr;
 		size_t						m_inputLength = 0u;
 		AudioFormat					m_inputFormat = AudioFormat::AudioUnknown;
-		AudioCodecs::AudioFile		m_decodedAudio;
+		AudioFile					m_decodedAudio;
 		Result						m_result;
 
 	public:
@@ -37,7 +37,7 @@ namespace AudioConvert
 				}
 
 				// Try to decode input data
-				Aux::FixedStream inputStream(m_inputData, m_inputLength);
+				aux::FixedStream inputStream(m_inputData, m_inputLength);
 
 				if (!m_audioConverter.DecodeAudio(inputStream, m_inputFormat, m_decodedAudio))
 				{
@@ -107,9 +107,9 @@ namespace AudioConvert
 		}
 
 		// Encode audio
-		audioConverterStub->m_result = AudioConverterExportsStub::AudioFile();
+		audioConverterStub->m_result = AudioConverterExportsStub::AudioBlob();
 
-		Aux::VectorStream<false> outputStream(boost::strict_get<AudioConverterExportsStub::AudioFile>(audioConverterStub->m_result));
+		aux::VectorStream<false> outputStream(boost::strict_get<AudioConverterExportsStub::AudioBlob>(audioConverterStub->m_result));
 
 		if (!audioConverterStub->m_audioConverter.EncodeAudio(audioConverterStub->m_decodedAudio, outputStream, outputFormat))
 		{
@@ -136,16 +136,16 @@ namespace AudioConvert
 		}
 
 		// Convert each channel of the decoded audio into specified samples data format
-		audioConverterStub->m_result = AudioConverterExportsStub::MultipleAudioFile();
+		audioConverterStub->m_result = AudioConverterExportsStub::MultipleAudioBlob();
 
 		const auto& metadata = audioConverterStub->m_decodedAudio.GetMetadata();
 
-		auto& outputChannels = boost::strict_get<AudioConverterExportsStub::MultipleAudioFile>(audioConverterStub->m_result);
+		auto& outputChannels = boost::strict_get<AudioConverterExportsStub::MultipleAudioBlob>(audioConverterStub->m_result);
 		outputChannels.Allocate(metadata.m_channelCount);
 
 		for (uint16_t channelIndex = 0u; channelIndex != metadata.m_channelCount; ++channelIndex)
 		{
-			audioConverterStub->m_decodedAudio.ConvertChannelData(channelIndex, static_cast<AudioCodecs::AudioDataType>(outputDataType), outputChannels[channelIndex]);
+			audioConverterStub->m_decodedAudio.ConvertChannelData(channelIndex, static_cast<AudioDataType>(outputDataType), outputChannels[channelIndex]);
 		}
 
 		return true;
@@ -174,11 +174,11 @@ namespace AudioConvert
 		}
 
 		// Validate audio segments and segmentize decoded audio
-		audioConverterStub->m_result = AudioConverterExportsStub::MultipleAudioFile();
+		audioConverterStub->m_result = AudioConverterExportsStub::MultipleAudioBlob();
 
 		const auto& metadata = audioConverterStub->m_decodedAudio.GetMetadata();
 
-		auto& outputSegments = boost::strict_get<AudioConverterExportsStub::MultipleAudioFile>(audioConverterStub->m_result);
+		auto& outputSegments = boost::strict_get<AudioConverterExportsStub::MultipleAudioBlob>(audioConverterStub->m_result);
 		outputSegments.Allocate(audioSegmentsCount);
 
 		for (uint32_t segmentIndex = 0u; segmentIndex != audioSegmentsCount; ++segmentIndex)
@@ -206,12 +206,12 @@ namespace AudioConvert
 			const uint32_t segmentSize = metadata.m_bytesPerSample * samplesCount;
 			const void* segmentSamples = audioConverterStub->m_decodedAudio.Samples(audioSegments[segmentIndex].m_channelIndex)->Data() + segmentShift;
 
-			AudioCodecs::AudioFile outputSegment;
-			outputSegment.SetFormat(AudioCodecs::AudioMetadata(metadata.m_sampleRate, metadata.m_bytesPerSample, metadata.m_integerFormat, 1u, samplesCount));
+			AudioFile outputSegment;
+			outputSegment.SetFormat(AudioMetadata(metadata.m_sampleRate, metadata.m_bytesPerSample, metadata.m_integerFormat, 1u, samplesCount));
 			outputSegment.TransmitSplittedSamples(&segmentSamples, segmentSize, metadata.m_bytesPerSample);
 
 			// Setup output stream and encode audio segment
-			Aux::VectorStream<false> outputStream(outputSegments[segmentIndex]);
+			aux::VectorStream<false> outputStream(outputSegments[segmentIndex]);
 
 			if (!audioConverterStub->m_audioConverter.EncodeAudio(outputSegment, outputStream, outputFormat))
 			{
@@ -235,14 +235,14 @@ namespace AudioConvert
 				return 0u;
 			}
 
-			constexpr uint32_t operator ()(const AudioConverterExportsStub::AudioFile& audioFile) const
+			constexpr uint32_t operator ()(const AudioConverterExportsStub::AudioBlob& audioBlob) const
 			{
 				return 1u;
 			}
 
-			inline uint32_t operator ()(const AudioConverterExportsStub::MultipleAudioFile& multipleAudioFile) const
+			inline uint32_t operator ()(const AudioConverterExportsStub::MultipleAudioBlob& multipleAudioBlob) const
 			{
-				return static_cast<uint32_t>(multipleAudioFile.size());
+				return static_cast<uint32_t>(multipleAudioBlob.size());
 			}
 		};
 
@@ -270,15 +270,15 @@ namespace AudioConvert
 				return AudioData{ nullptr, 0u };
 			}
 
-			inline AudioData operator ()(const AudioConverterExportsStub::AudioFile& audioFile) const
+			inline AudioData operator ()(const AudioConverterExportsStub::AudioBlob& audioBlob) const
 			{
-				return AudioData{ audioFile.data(), audioFile.size() };
+				return AudioData{ audioBlob.data(), audioBlob.size() };
 			}
 
-			inline AudioData operator ()(const AudioConverterExportsStub::MultipleAudioFile& multipleAudioFile) const
+			inline AudioData operator ()(const AudioConverterExportsStub::MultipleAudioBlob& multipleAudioBlob) const
 			{
-				assert(m_resultIndex < multipleAudioFile.size());
-				return AudioData{ multipleAudioFile[m_resultIndex].data(), multipleAudioFile[m_resultIndex].size() };
+				assert(m_resultIndex < multipleAudioBlob.size());
+				return AudioData{ multipleAudioBlob[m_resultIndex].data(), multipleAudioBlob[m_resultIndex].size() };
 			}
 		};
 
@@ -306,17 +306,17 @@ namespace AudioConvert
 				return false;
 			}
 
-			inline bool operator ()(const AudioConverterExportsStub::AudioFile& audioFile) const
+			inline bool operator ()(const AudioConverterExportsStub::AudioBlob& audioBlob) const
 			{
-				m_resultsEnumerator(audioFile.data(), audioFile.size());
+				m_resultsEnumerator(audioBlob.data(), audioBlob.size());
 				return true;
 			}
 
-			inline bool operator ()(const AudioConverterExportsStub::MultipleAudioFile& multipleAudioFile) const
+			inline bool operator ()(const AudioConverterExportsStub::MultipleAudioBlob& multipleAudioBlob) const
 			{
-				for (uint32_t audioFileIndex = 0; audioFileIndex != multipleAudioFile.size(); ++audioFileIndex)
+				for (uint32_t audioBlobIndex = 0; audioBlobIndex != multipleAudioBlob.size(); ++audioBlobIndex)
 				{
-					if (!m_resultsEnumerator(multipleAudioFile[audioFileIndex].data(), multipleAudioFile[audioFileIndex].size()))
+					if (!m_resultsEnumerator(multipleAudioBlob[audioBlobIndex].data(), multipleAudioBlob[audioBlobIndex].size()))
 					{
 						break;
 					}

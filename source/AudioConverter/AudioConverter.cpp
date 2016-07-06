@@ -8,11 +8,11 @@
 #include "../AudioCodecs/OpusEncoder.h"
 #include "../AudioCodecs/VorbisDecoder.h"
 #include "../AudioCodecs/VorbisEncoder.h"
-#include "../AudioCodecs/MpegDecoder.h"
-#include "../AudioCodecs/MpegEncoder.h"
+#include "../AudioCodecs/Mp3Decoder.h"
+#include "../AudioCodecs/Mp3Encoder.h"
 
 
-namespace AudioConvert
+namespace audioconvert
 {
 	//-------------------------------------------------------------------------------------------------
 	AudioConverter::AudioConverter()
@@ -25,7 +25,7 @@ namespace AudioConvert
 	}
 
 	//-------------------------------------------------------------------------------------------------
-	bool AudioConverter::DecodeAudio(Aux::IMemoryStream& inputStream, AudioFormat audioFormat, AudioCodecs::AudioFile& decodedAudio)
+	bool AudioConverter::DecodeAudio(aux::IMemoryStream& inputStream, AudioFormat audioFormat, AudioFile& decodedAudio)
 	{
 		m_lastError.clear();
 
@@ -33,7 +33,7 @@ namespace AudioConvert
 		{
 		case AudioFormat::AudioWave: // Wave with RIFF header
 			{
-				AudioCodecs::WaveDecoder waveDecoder;
+				WaveDecoder waveDecoder;
 
 				if (!waveDecoder.DecodeStream(inputStream, decodedAudio))
 				{
@@ -46,7 +46,7 @@ namespace AudioConvert
 
 		case AudioFormat::AudioFlac: // FLAC with FLAC header
 			{
-				AudioCodecs::FlacDecoder flacDecoder;
+				FlacDecoder flacDecoder;
 
 				if (!flacDecoder.DecodeStream(inputStream, decodedAudio))
 				{
@@ -59,7 +59,7 @@ namespace AudioConvert
 
 		case AudioFormat::AudioOpus: // Opus audio in Ogg container
 			{
-				AudioCodecs::OpusDecoder opusDecoder;
+				OpusDecoder opusDecoder;
 
 				if (!opusDecoder.DecodeStream(inputStream, decodedAudio))
 				{
@@ -72,7 +72,7 @@ namespace AudioConvert
 
 		case AudioFormat::AudioVorbis: // Vorbis audio in Ogg container
 			{
-				AudioCodecs::VorbisDecoder vorbisDecoder;
+				VorbisDecoder vorbisDecoder;
 
 				if (!vorbisDecoder.DecodeStream(inputStream, decodedAudio))
 				{
@@ -84,7 +84,7 @@ namespace AudioConvert
 			break;
 
 		case AudioFormat::AudioMp3: // MPEG layer-3 with id3v2 header
-			if (!AudioCodecs::MpegDecoder::DecodeStream(inputStream, decodedAudio))
+			if (!MpegDecoder::DecodeStream(inputStream, decodedAudio))
 			{
 				assert(false);
 				return false;
@@ -103,7 +103,7 @@ namespace AudioConvert
 	}
 
 	//-------------------------------------------------------------------------------------------------
-	bool AudioConverter::EncodeAudio(AudioCodecs::AudioFile& inputAudio, Aux::IStream& outputStream, AudioFormat audioFormat)
+	bool AudioConverter::EncodeAudio(AudioFile& inputAudio, aux::IStream& outputStream, AudioFormat audioFormat)
 	{
 		m_lastError.clear();
 
@@ -111,7 +111,7 @@ namespace AudioConvert
 		{
 		case AudioFormat::AudioWave: // Wave with RIFF header
 			{
-				AudioCodecs::WaveEncoder waveEncoder;
+				WaveEncoder waveEncoder;
 
 				if (!waveEncoder.EncodeSamples(inputAudio, outputStream))
 				{
@@ -123,7 +123,7 @@ namespace AudioConvert
 
 		case AudioFormat::AudioFlac: // FLAC with FLAC header
 			{
-				AudioCodecs::FlacEncoder flacEncoder;
+				FlacEncoder flacEncoder;
 
 				if (!flacEncoder.EncodeSamples(inputAudio, outputStream))
 				{
@@ -135,7 +135,7 @@ namespace AudioConvert
 
 		case AudioFormat::AudioOpus: // Opus audio in Ogg container
 			{
-				AudioCodecs::OpusEncoder opusEncoder;
+				OpusEncoder opusEncoder;
 
 				if (!opusEncoder.EncodeSamples(inputAudio, outputStream))
 				{
@@ -147,7 +147,7 @@ namespace AudioConvert
 
 		case AudioFormat::AudioVorbis: // Vorbis audio in Ogg container
 			{
-				AudioCodecs::VorbisEncoder vorbisEncoder;
+				VorbisEncoder vorbisEncoder;
 
 				if (!vorbisEncoder.EncodeSamples(inputAudio, outputStream))
 				{
@@ -159,7 +159,7 @@ namespace AudioConvert
 
 		case AudioFormat::AudioMp3: // MPEG layer-3 with id3v2 header
 			{
-				AudioCodecs::MpegEncoder mpegEncoder;
+				MpegEncoder mpegEncoder;
 
 				if (!mpegEncoder.EncodeSamples(inputAudio, outputStream))
 				{

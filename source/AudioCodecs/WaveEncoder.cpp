@@ -3,12 +3,12 @@
 #include "WaveDecoder.h"
 
 
-namespace AudioCodecs
+namespace audioconvert
 {
 /***************************************************************************************************
 *** WaveEncoder
 ***************************************************************************************************/
-	bool WaveEncoder::EncodeSamples(AudioFile& inputAudio, IStream& outputStream)
+	bool WaveEncoder::EncodeSamples(AudioFile& inputAudio, aux::IStream& outputStream)
 	{
 		auto& metadata = inputAudio.GetMetadata();
 

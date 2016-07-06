@@ -2,7 +2,7 @@
 #include "WaveDecoder.h"
 
 
-namespace AudioCodecs
+namespace audioconvert
 {
 /***************************************************************************************************
 *** WaveDecoder
@@ -17,13 +17,13 @@ namespace AudioCodecs
 	}
 
 	/**********************************************************************************************/
-	bool WaveDecoder::TestStream(IMemoryStream& inputStream)
+	bool WaveDecoder::TestStream(aux::IMemoryStream& inputStream)
 	{
 		return false;
 	}
 
 	/**********************************************************************************************/
-	bool WaveDecoder::DecodeStream(IMemoryStream& inputStream, AudioSink& outputSink)
+	bool WaveDecoder::DecodeStream(aux::IMemoryStream& inputStream, AudioSink& outputSink)
 	{
 		// Do decoding input stream as single chunk
 		DecodeChunk(inputStream.EntireData(), static_cast<uint32_t>(inputStream.Length()), outputSink);
